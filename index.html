@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elregann — Flutter Developer & Cryptography Researcher</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --border: #1e1e1e;
+      --accent: #e8ff47;
+      --accent2: #ff6b35;
+      --text: #f0f0f0;
+      --muted: #666;
+      --muted2: #444;
+      --font-display: 'Syne', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+      --font-body: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 3rem;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 3rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg-text {
+      position: absolute;
+      top: 50%;
+      left: -2%;
+      transform: translateY(-50%);
+      font-family: var(--font-display);
+      font-size: clamp(120px, 18vw, 280px);
+      font-weight: 800;
+      color: transparent;
+      -webkit-text-stroke: 1px #1a1a1a;
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+      letter-spacing: -0.04em;
+      animation: bgTextDrift 20s ease-in-out infinite alternate;
+    }
+
+    @keyframes bgTextDrift {
+      from { transform: translateY(-50%) translateX(0); }
+      to   { transform: translateY(-52%) translateX(-2%); }
+    }
+
+    .hero-tag {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.2s forwards;
+    }
+
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 9vw, 8rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.35s forwards;
+    }
+
+    .hero-name span {
+      color: var(--accent);
+      position: relative;
+      display: inline-block;
+    }
+
+    .hero-subtitle {
+      font-size: 1.05rem;
+      color: var(--muted);
+      font-weight: 300;
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.5s forwards;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.65s forwards;
+    }
+
+    .btn {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.75rem 1.8rem;
+      border-radius: 2px;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #0a0a0a;
+      font-weight: 500;
+    }
+
+    .btn-primary:hover {
+      background: #fff;
+      transform: translateY(-2px);
+    }
+
+    .btn-ghost {
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem;
+      right: 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0;
+      animation: fadeUp 1s 1.2s forwards;
+    }
+
+    .hero-scroll span {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted2);
+      writing-mode: vertical-rl;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    /* ── SECTION BASE ── */
+    section {
+      padding: 7rem 3rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      max-width: 40px;
+      height: 1px;
+      background: var(--accent);
+      opacity: 0.4;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 3rem;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      margin: 0 3rem;
+      width: calc(100% - 6rem);
+    }
+
+    /* ── WHY I BUILD ── */
+    #why {
+      padding: 7rem 3rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .why-quote {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      color: var(--text);
+    }
+
+    .why-quote em {
+      color: var(--accent);
+      font-style: normal;
+    }
+
+    .why-body p {
+      color: var(--muted);
+      font-weight: 300;
+      margin-bottom: 1.2rem;
+      font-size: 0.97rem;
+      line-height: 1.75;
+    }
+
+    .why-body p:last-child { margin-bottom: 0; }
+
+    .why-body strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* ── SKILLS ── */
+    #skills { padding: 7rem 3rem; max-width: 1100px; margin: 0 auto; }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .skill-card {
+      background: var(--bg);
+      padding: 2rem;
+      transition: background 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      transition: height 0.3s ease;
+    }
+
+    .skill-card:hover::before { height: 100%; }
+    .skill-card:hover { background: var(--surface); }
+
+    .skill-icon {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .skill-name {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      letter-spacing: -0.01em;
+    }
+
+    .skill-desc {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── PROJECTS ── */
+    #projects { padding: 7rem 3rem; max-width: 1100px; margin: 0 auto; }
+
+    .project-item {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 4rem;
+      padding: 3rem 0;
+      border-top: 1px solid var(--border);
+      align-items: start;
+      transition: all 0.2s;
+    }
+
+    .project-item:last-child { border-bottom: 1px solid var(--border); }
+
+    .project-meta { position: relative; }
+
+    .project-number {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--muted2);
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+
+    .project-name {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      transition: color 0.2s;
+    }
+
+    .project-item:hover .project-name { color: var(--accent); }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 1.5rem;
+    }
+
+    .tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      padding: 0.3rem 0.7rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border-radius: 2px;
+    }
+
+    .project-content { padding-top: 0.5rem; }
+
+    .project-desc {
+      color: var(--muted);
+      font-weight: 300;
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .project-highlight {
+      background: var(--surface);
+      border-left: 2px solid var(--accent);
+      padding: 1rem 1.2rem;
+      margin-bottom: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .project-highlight span {
+      color: var(--accent);
+      display: block;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+
+    .project-link {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: gap 0.2s;
+    }
+
+    .project-link:hover { gap: 0.8rem; }
+
+    /* ── STATUS BADGES ── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.7rem;
+      border-radius: 2px;
+      margin-top: 0.5rem;
+    }
+
+    .badge-active {
+      background: rgba(232,255,71,0.08);
+      color: var(--accent);
+      border: 1px solid rgba(232,255,71,0.2);
+    }
+
+    .badge-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: blink 1.5s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      padding: 7rem 3rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    .contact-left .section-title { margin-bottom: 1.2rem; }
+
+    .contact-tagline {
+      color: var(--muted);
+      font-weight: 300;
+      font-size: 0.97rem;
+      line-height: 1.75;
+      margin-bottom: 2rem;
+    }
+
+    .contact-tagline strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .contact-right {
+      padding-top: 0.5rem;
+    }
+
+    .contact-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .contact-item:first-child { border-top: 1px solid var(--border); }
+
+    .contact-item-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--muted2);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .contact-item-value {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.2s;
+      letter-spacing: -0.01em;
+    }
+
+    .contact-item-value:hover { color: var(--accent); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-left {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--muted2);
+      letter-spacing: 0.05em;
+    }
+
+    .footer-left span { color: var(--accent); }
+
+    .footer-right {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--muted2);
+    }
+
+    /* ── AVATAR PLACEHOLDER ── */
+    .avatar-placeholder {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .avatar-placeholder::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 1px dashed var(--muted2);
+      animation: spinSlow 12s linear infinite;
+    }
+
+    @keyframes spinSlow {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.2rem; }
+      #hero { padding: 0 1.5rem 4rem; }
+      section, #why, #skills, #projects, #contact { padding: 5rem 1.5rem; }
+      .why-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+      .project-item { grid-template-columns: 1fr; gap: 2rem; }
+      .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+      .divider { margin: 0 1.5rem; width: calc(100% - 3rem); }
+    }
+
+    @media (max-width: 480px) {
+      .skills-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">elregann.</a>
+    <ul class="nav-links">
+      <li><a href="#why">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero" style="max-width:none; padding-top:0;">
+    <div class="hero-bg-text">BUILD.</div>
+    <div class="avatar-placeholder" style="opacity:0; animation: fadeUp 0.6s 0.1s forwards;">U</div>
+    <p class="hero-tag">// Tangerang Selatan, Indonesia · Open to Collab</p>
+    <h1 class="hero-name">
+      Elregann<br /><span>Builder.</span>
+    </h1>
+    <p class="hero-subtitle">
+      Flutter Developer & Cryptography Researcher —
+      membangun dari rasa penasaran, bukan dari kurikulum.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">See My Work</a>
+      <a href="#contact" class="btn btn-ghost">Let's Collaborate</a>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>scroll</span>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- WHY I BUILD -->
+  <section id="why">
+    <p class="section-label reveal">Why I Build</p>
+    <div class="why-grid">
+      <div class="why-quote reveal">
+        Semua dimulai dari satu kebutuhan sederhana —
+        <em>chat app yang gratis dan aku miliki sendiri.</em>
+      </div>
+      <div class="why-body reveal">
+        <p>
+          Aku bukan programmer yang belajar teori lalu mengimplementasikannya.
+          Aku membangun untuk memahami — <strong>implementasi adalah caraku belajar.</strong>
+        </p>
+        <p>
+          Chatme lahir bukan karena aku ingin belajar Flutter.
+          Ia lahir karena aku butuh sebuah chat app yang bebas dari server pihak ketiga,
+          bebas dari langganan, dan sepenuhnya aku kendalikan.
+          Dari sana, rabbit hole dimulai: Nostr protocol, enkripsi secp256k1,
+          lalu keinginan untuk membangun protokol kriptografi sendiri dari nol.
+        </p>
+        <p>
+          <strong>Bukan senior developer. Bukan matematikawan.</strong>
+          Tapi kalau kamu punya proyek dan kita bisa kolaborasi — aku bisa melakukannya.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <p class="section-label reveal">Stack & Expertise</p>
+    <h2 class="section-title reveal">What I Work With</h2>
+    <div class="skills-grid reveal">
+      <div class="skill-card">
+        <div class="skill-icon">◈</div>
+        <div class="skill-name">Flutter & Dart</div>
+        <div class="skill-desc">Mobile development. UI/UX implementation. State management. Built from zero to functional in under 2 months.</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">⬡</div>
+        <div class="skill-name">Nostr Protocol</div>
+        <div class="skill-desc">Decentralized relay architecture. NIP-04 & NIP-44 encrypted messaging. Event-based pub/sub model.</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">⟁</div>
+        <div class="skill-name">Cryptography (ECC)</div>
+        <div class="skill-desc">Elliptic curve mathematics. Custom curve design. Scalar protection layers. SageMath verification.</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">◎</div>
+        <div class="skill-name">WebRTC</div>
+        <div class="skill-desc">Real-time peer-to-peer voice calling. Signaling architecture. ICE candidate negotiation.</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">▣</div>
+        <div class="skill-name">Firebase</div>
+        <div class="skill-desc">FCM push notifications. Realtime Database. Background message handling. Event deduplication logic.</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">⬒</div>
+        <div class="skill-name">System Design</div>
+        <div class="skill-desc">Architecture decisions. Problem decomposition. Building complex systems solo, driven by instinct & logic.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="section-label reveal">Selected Work</p>
+    <h2 class="section-title reveal">Projects</h2>
+
+    <!-- CHATME -->
+    <div class="project-item reveal">
+      <div class="project-meta">
+        <p class="project-number">01 / 02</p>
+        <h3 class="project-name">Chatme</h3>
+        <div class="badge badge-active">
+          <div class="badge-dot"></div>
+          In Development
+        </div>
+        <div class="project-tags">
+          <span class="tag">Flutter</span>
+          <span class="tag">Nostr</span>
+          <span class="tag">WebRTC</span>
+          <span class="tag">Firebase</span>
+          <span class="tag">Dart</span>
+        </div>
+      </div>
+      <div class="project-content">
+        <p class="project-desc">
+          Aplikasi chat terdesentralisasi yang dibangun di atas Nostr protocol —
+          tanpa server pusat, tanpa langganan, sepenuhnya dimiliki penggunanya.
+          Mendukung pesan terenkripsi (NIP-04 & NIP-44), voice calling via WebRTC,
+          dan push notification via Firebase FCM.
+        </p>
+        <div class="project-highlight">
+          <span>// Origin</span>
+          Chatme exists because I wanted a chat app I fully own — no servers, no subscriptions, no third party. So I built one. Foundation completed in under 2 months, starting from zero Flutter knowledge.
+        </div>
+        <a href="https://github.com/elregann/Chatme" class="project-link" target="_blank">
+          View on GitHub →
+        </a>
+      </div>
+    </div>
+
+    <!-- CURVE256189 -->
+    <div class="project-item reveal">
+      <div class="project-meta">
+        <p class="project-number">02 / 02</p>
+        <h3 class="project-name">Curve256189</h3>
+        <div class="badge badge-active">
+          <div class="badge-dot"></div>
+          Active Research
+        </div>
+        <div class="project-tags">
+          <span class="tag">Dart</span>
+          <span class="tag">Cryptography</span>
+          <span class="tag">ECC</span>
+          <span class="tag">SageMath</span>
+        </div>
+      </div>
+      <div class="project-content">
+        <p class="project-desc">
+          Custom elliptic curve cryptography library yang dibangun dari nol dalam Dart.
+          Menampilkan FPOW (Fixed-Point One-Way Wrap) — sebuah scalar protection layer
+          berbasis hash sebagai mekanisme quantum hardening yang diverifikasi via SageMath.
+          Tujuan jangka panjangnya: menjadi backbone enkripsi Chatme sendiri,
+          lepas dari ekosistem Nostr.
+        </p>
+        <div class="project-highlight">
+          <span>// Motivation</span>
+          Started from curiosity about secp256k1 in Nostr. Ended up designing a custom curve with a novel protection layer. 68 test cases across 9 attack categories. A long journey I'm fully enjoying.
+        </div>
+        <a href="https://github.com/elregann/Curve256189" class="project-link" target="_blank">
+          View on GitHub →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="contact-left reveal">
+        <p class="section-label">Get In Touch</p>
+        <h2 class="section-title">Let's Build<br />Something.</h2>
+        <p class="contact-tagline">
+          Sedang mengerjakan sesuatu yang menarik?
+          Punya ide yang butuh direalisasikan?
+          <strong>Aku terbuka untuk kolaborasi, freelance, atau sekadar diskusi teknis.</strong>
+        </p>
+        <p class="contact-tagline" style="font-size: 0.82rem;">
+          Currently: actively developing Chatme & Curve256189 · 
+          Mahasiswa Teknik Informatika · Tangerang Selatan, Indonesia
+        </p>
+      </div>
+      <div class="contact-right reveal">
+        <div class="contact-item">
+          <span class="contact-item-label">Email</span>
+          <a href="mailto:ismaelurzaizaranda@gmail.com" class="contact-item-value">
+            ismaelurzaizaranda@gmail.com
+          </a>
+        </div>
+        <div class="contact-item">
+          <span class="contact-item-label">GitHub</span>
+          <a href="https://github.com/elregann" target="_blank" class="contact-item-value">
+            github.com/elregann
+          </a>
+        </div>
+        <div class="contact-item">
+          <span class="contact-item-label">Status</span>
+          <span class="contact-item-value" style="cursor:default;">
+            <span style="color: var(--accent);">●</span> Open to Collaborate
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+<footer>
+  <p class="footer-left">
+    Elregann — <span>Flutter Developer & Cryptography Researcher</span>
+  </p>
+  <p class="footer-right">Built with curiosity. © <span id="tahunSekarang"></span></p>
+</footer>
+
+<script>
+  document.getElementById("tahunSekarang").innerHTML = new Date().getFullYear();
+</script>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    reveals.forEach(el => observer.observe(el));
+
+    // Nav active highlight
+    const sections = document.querySelectorAll('section[id], #why, #skills, #projects, #contact');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      document.querySelectorAll('[id]').forEach(sec => {
+        if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
+      });
+      navLinks.forEach(link => {
+        link.style.color = link.getAttribute('href') === `#${current}` ? 'var(--accent)' : '';
+      });
+    });
+  </script>
+
+</body>
+</html>
