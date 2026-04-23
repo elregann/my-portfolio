@@ -372,11 +372,7 @@
     }
 
     .hero-inner {
-      flex: 1;
-      display: flex;
-      align-items: flex-end;
-      position: relative;
-      z-index: 2;
+      align-items: center;
     }
 
     .hero-content {
@@ -1040,9 +1036,14 @@
       .container { padding: 0 1.25rem; }
       section { padding: 4.5rem 0; }
 
-      .hero-content { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 1.25rem 5rem; }
+      .hero-content { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 1.25rem 3rem; }
       .hero-portrait { display: none; }
       .hero-name { font-size: clamp(2.5rem, 10vw, 4rem); }
+
+      #hero {
+        min-height: auto !important;
+        padding-bottom: 2rem;
+      }
 
       footer { padding: 1.25rem; }
     }
@@ -1477,8 +1478,8 @@
       </span>
     </p>
     <p class="footer-r">
-        <span data-en="Last updated: April 23, 2026" data-id="Terakhir diperbarui: 23 April 2026">
-            Last updated: April 23, 2026
+        <span data-en="Last updated: April 24, 2026" data-id="Terakhir diperbarui: 24 April 2026">
+            Last updated: April 24, 2026
         </span>
     </p>
   </footer>
