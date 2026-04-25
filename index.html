@@ -702,7 +702,7 @@
     }
 
     .skill-card:nth-child(3n) { border-right: none; }
-    .skill-card:nth-child(n+4) { border-bottom: none; }
+    .skill-card:nth-last-child(-n+3) { border-bottom: none; }
 
     .skill-card:hover { background: var(--bg2); }
 
@@ -1193,11 +1193,13 @@
                   <span class="itag">WebRTC</span>
                   <span class="itag">Flutter</span>
                   <span class="itag">Cryptography</span>
+                  <span class="itag">Stream Cipher</span>
+                  <span class="itag">LWE</span>
                 </div>
               </div>
               <div class="sidebar-row">
                 <span class="sidebar-label" data-en="Active Projects" data-id="Proyek Aktif">Active Projects</span>
-                <span class="sidebar-value">Chatme, Curve256189, Curve33617</span>
+                <span class="sidebar-value">Chatme, Curve256189, Curve33617, BLiSS</span>
               </div>
             </div>
           </div>
@@ -1300,6 +1302,15 @@
           <div class="skill-name" data-en="System Design" data-id="System Design">System Design</div>
           <div class="skill-desc" data-en="Independent architecture decisions, problem decomposition, and construction of complex multi-layer systems driven by structured logic." data-id="Keputusan arsitektur mandiri, dekomposisi masalah, dan pembangunan sistem multi-layer kompleks yang didorong logika terstruktur.">Independent architecture decisions, problem decomposition, and construction of complex multi-layer systems driven by structured logic.</div>
         </div>
+        <div class="skill-card">
+        <span class="skill-numeral">07.</span>
+        <div class="skill-name" data-en="Symmetric Cryptography" data-id="Kriptografi Simetris">Symmetric Cryptography</div>
+        <div class="skill-desc"
+            data-en="Stream cipher design from first principles, generalized bent functions over Z_q, LWE-based state initialization, MDS diffusion matrices, and formal security reduction to lattice hardness assumptions. Verified via SageMath."
+            data-id="Desain stream cipher dari prinsip pertama, generalized bent functions di atas Z_q, inisialisasi state berbasis LWE, matriks difusi MDS, dan reduksi keamanan formal ke asumsi kekerasan lattice. Diverifikasi via SageMath.">
+            Stream cipher design from first principles, generalized bent functions over Z_q, LWE-based state initialization, MDS diffusion matrices, and formal security reduction to lattice hardness assumptions. Verified via SageMath.
+        </div>
+      </div>
       </div>
     </div>
   </section>
@@ -1417,6 +1428,40 @@
             <a href="https://github.com/elregann/Curve33617" target="_blank" class="proj-link" data-en="View Repository →" data-id="Lihat Repositori →">View Repository →</a>
         </div>
         </div>
+
+      <!-- BLISS -->
+      <div class="project-entry reveal">
+      <div class="proj-index">
+          <div class="proj-num-big">04</div>
+          <div class="proj-status-badge">
+          <span class="badge-dot"></span>
+          <span data-en="Active Research" data-id="Riset Aktif">Active Research</span>
+          </div>
+          <div class="proj-tags">
+          <span class="tag">Cryptography</span>
+          <span class="tag">Stream Cipher</span>
+          <span class="tag">LWE</span>
+          <span class="tag">SageMath</span>
+          </div>
+      </div>
+      <div class="proj-main">
+          <h3 class="proj-name">BLiSS</h3>
+          <p class="proj-desc"
+          data-en="A novel post-quantum stream cipher combining Generalized Bent Functions over Z_q with the Learning With Errors (LWE) hardness assumption. BLiSS introduces the Bent-Filtered LWE (BF-LWE) problem and provides a formal security argument reducing it to Decision-LWE — achieving perfect nonlinearity by construction, verified MDS diffusion, and session uniqueness without a nonce."
+          data-id="Stream cipher pasca-kuantum baru yang menggabungkan Generalized Bent Functions di atas Z_q dengan asumsi kekerasan Learning With Errors (LWE). BLiSS memperkenalkan masalah Bent-Filtered LWE (BF-LWE) dan memberikan argumen keamanan formal yang mereduksinya ke Decision-LWE — mencapai perfect nonlinearity berdasarkan konstruksi, difusi MDS terverifikasi, dan keunikan sesi tanpa nonce.">
+          A novel post-quantum stream cipher combining Generalized Bent Functions over Z_q with the Learning With Errors (LWE) hardness assumption. BLiSS introduces the Bent-Filtered LWE (BF-LWE) problem and provides a formal security argument reducing it to Decision-LWE — achieving perfect nonlinearity by construction, verified MDS diffusion, and session uniqueness without a nonce.
+          </p>
+          <div class="research-note">
+          <p class="research-note-label" data-en="Research Note" data-id="Catatan Riset">Research Note</p>
+          <p class="research-note-text"
+              data-en="BLiSS emerged from a fundamental question: can a stream cipher achieve provable post-quantum security through a formal reduction to a lattice problem, rather than relying on heuristic arguments? The construction operates natively over Z_q — the same domain as LWE — enabling a coherent security architecture where the Maiorana–McFarland bent function, the verified MDS Cauchy diffusion matrix, and the LWE-based state initialization speak the same mathematical language. All cryptographic properties were verified computationally via SageMath."
+              data-id="BLiSS lahir dari pertanyaan mendasar: dapatkah stream cipher mencapai keamanan pasca-kuantum yang dapat dibuktikan melalui reduksi formal ke masalah lattice, alih-alih mengandalkan argumen heuristik? Konstruksi beroperasi secara native di atas Z_q — domain yang sama dengan LWE — memungkinkan arsitektur keamanan yang koheren di mana fungsi bent Maiorana–McFarland, matriks difusi Cauchy MDS terverifikasi, dan inisialisasi state berbasis LWE berbicara dalam bahasa matematika yang sama. Semua properti kriptografi diverifikasi secara komputasi melalui SageMath.">
+              BLiSS emerged from a fundamental question: can a stream cipher achieve provable post-quantum security through a formal reduction to a lattice problem, rather than relying on heuristic arguments? The construction operates natively over Z_q — the same domain as LWE — enabling a coherent security architecture where the Maiorana–McFarland bent function, the verified MDS Cauchy diffusion matrix, and the LWE-based state initialization speak the same mathematical language. All cryptographic properties were verified computationally via SageMath.
+          </p>
+          </div>
+          <a href="https://github.com/elregann/BLiSS/blob/main/document.pdf" target="_blank" class="proj-link" data-en="View Paper →" data-id="Lihat Paper →">View Paper →</a>
+      </div>
+      </div>
     </div>
   </section>
 
@@ -1437,9 +1482,9 @@
                data-id="Saya terbuka untuk kolaborasi, proyek freelance, dan diskusi teknis — terutama yang bersinggungan dengan pengembangan mobile, kriptografi terapan, atau sistem terdesentralisasi.">
               I am open to collaboration, freelance projects, and technical discussions — particularly those intersecting mobile development, applied cryptography, or decentralised systems.
             </p>
-            <p data-en="Currently engaged in the active development of both Chatme, Curve256189, and Curve33617. Informatics Engineering student. Based in South Tangerang, Indonesia."
-               data-id="Saat ini terlibat aktif dalam pengembangan Chatme, Curve256189, dan Curve33617. Mahasiswa Teknik Informatika. Berdomisili di Tangerang Selatan, Indonesia.">
-              Currently engaged in the active development of both Chatme, Curve256189, and Curve33617. Informatics Engineering student. Based in South Tangerang, Indonesia.
+            <p data-en="Currently engaged in the active development of both Chatme, Curve256189, Curve33617, and BLiSS. Informatics Engineering student. Based in South Tangerang, Indonesia."
+               data-id="Saat ini terlibat aktif dalam pengembangan Chatme, Curve256189, Curve33617, dan BLiSS. Mahasiswa Teknik Informatika. Berdomisili di Tangerang Selatan, Indonesia.">
+              Currently engaged in the active development of both Chatme, Curve256189, Curve33617, and BLiSS. Informatics Engineering student. Based in South Tangerang, Indonesia.
             </p>
           </div>
           <div class="contact-availability">
@@ -1478,8 +1523,8 @@
       </span>
     </p>
     <p class="footer-r">
-        <span data-en="Last updated: April 24, 2026" data-id="Terakhir diperbarui: 24 April 2026">
-            Last updated: April 24, 2026
+        <span data-en="Last updated: April 25, 2026" data-id="Terakhir diperbarui: 25 April 2026">
+            Last updated: April 25, 2026
         </span>
     </p>
   </footer>
