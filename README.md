@@ -13,6 +13,7 @@ Personal research portfolio — independent work in Flutter, ECC, and decentrali
 - **Chatme** – Nostr-based, serverless chat with WebRTC voice
 - **Curve256189** – Original ECC library in Dart (SafeCurves complete)
 - **Curve33617** – Montgomery curve at ~168-bit security level
+- **BLiSS** – A novel post-quantum stream cipher
 
 ## Live
 
