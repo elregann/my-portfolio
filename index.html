@@ -1462,6 +1462,47 @@
           <a href="https://github.com/elregann/BLiSS/blob/main/document.pdf" target="_blank" class="proj-link" data-en="View Paper →" data-id="Lihat Paper →">View Paper →</a>
       </div>
       </div>
+
+      <!-- DQIND -->
+
+<div class="project-entry reveal">
+
+    <div class="proj-index">
+        <div class="proj-num-big">05</div>
+        <div class="proj-status-badge">
+            <span class="badge-dot"></span>
+            <span data-en="Active Research" data-id="Riset Aktif">Active Research</span>
+        </div>
+        <div class="proj-tags">
+            <span class="tag">Post-Quantum</span>
+            <span class="tag">Hardness Assumption</span>
+            <span class="tag">Sigma Protocol</span>
+            <span class="tag">Random Oracle</span>
+            <span class="tag">SageMath</span>
+        </div>
+    </div>
+
+    <div class="proj-main">
+        <h3 class="proj-name">D-QIND</h3>
+        <p class="proj-desc"
+           data-en="The Decisional Q-Indistinguishability (D-QIND) assumption — a new standalone hardness assumption for post-quantum cryptography. Unlike Q-IND which requires exposing the full preimage set Pa to the adversary, D-QIND challenges the adversary with only a single candidate preimage and a hash-based binding tag. The assumption is proved hard under Pa-Enumeration Hardness (PEH) and the Random Oracle Model, with a three-round Sigma protocol achieving Completeness, Soundness, and Honest-Verifier Zero-Knowledge. All constructions are verified concretely via SageMath for f(x,y) = (x + y) mod p with p ≈ 2^128."
+           data-id="Decisional Q-Indistinguishability (D-QIND) — asumsi kekerasan standalone baru untuk kriptografi pasca-kuantum. Berbeda dengan Q-IND yang mengharuskan seluruh himpunan preimage Pa diekspos ke musuh, D-QIND hanya memberikan satu kandidat preimage dan binding tag berbasis hash. Asumsi ini terbukti keras di bawah Pa-Enumeration Hardness (PEH) dan Random Oracle Model, dengan protokol Sigma tiga putaran yang memenuhi Completeness, Soundness, dan Honest-Verifier Zero-Knowledge. Semua konstruksi diverifikasi secara konkret via SageMath untuk f(x,y) = (x + y) mod p dengan p ≈ 2^128.">
+            The Decisional Q-Indistinguishability (D-QIND) assumption — a new standalone hardness assumption for post-quantum cryptography. Unlike Q-IND which requires exposing the full preimage set Pa to the adversary, D-QIND challenges the adversary with only a single candidate preimage and a hash-based binding tag. The assumption is proved hard under Pa-Enumeration Hardness (PEH) and the Random Oracle Model, with a three-round Sigma protocol achieving Completeness, Soundness, and Honest-Verifier Zero-Knowledge. All constructions are verified concretely via SageMath for f(x,y) = (x + y) mod p with p ≈ 2^128.
+        </p>
+
+        <div class="research-note">
+            <p class="research-note-label" data-en="Research Note" data-id="Catatan Riset">Research Note</p>
+            <p class="research-note-text"
+               data-en="D-QIND addresses a structural limitation of the original Q-IND assumption: the requirement that the challenger explicitly enumerates and hands the full preimage set Pa to the adversary. D-QIND removes this requirement entirely — the adversary receives only a single candidate (x*,y*) and a binding tag τ, and must decide whether it is the true preimage or a random valid impostor. We prove a hardness lower bound showing any PPT adversary's advantage is bounded by Adv_ROM + Adv_PEH + 1/|Pa|, all negligible by assumption. A full SageMath verification suite confirms |Pa| ≥ 2^128, I(b;τ) = 0, SD(D0,D1) = 1/|Pa|, and protocol completeness."
+               data-id="D-QIND mengatasi keterbatasan struktural dari asumsi Q-IND asli: persyaratan bahwa challenger harus menghitung dan memberikan seluruh himpunan preimage Pa kepada musuh. D-QIND menghapus persyaratan ini sepenuhnya — musuh hanya menerima satu kandidat (x*,y*) dan binding tag τ, dan harus memutuskan apakah itu preimage asli atau impostor acak yang valid. Kami membuktikan batas bawah kekerasan yang menunjukkan bahwa keunggulan musuh PPT dibatasi oleh Adv_ROM + Adv_PEH + 1/|Pa|, semuanya diabaikan berdasarkan asumsi. Rangkaian verifikasi SageMath yang lengkap mengonfirmasi |Pa| ≥ 2^128, I(b;τ) = 0, SD(D0,D1) = 1/|Pa|, dan kelengkapan protokol.">
+                D-QIND addresses a structural limitation of the original Q-IND assumption: the requirement that the challenger explicitly enumerates and hands the full preimage set Pa to the adversary. D-QIND removes this requirement entirely — the adversary receives only a single candidate (x*,y*) and a binding tag τ, and must decide whether it is the true preimage or a random valid impostor. We prove a hardness lower bound showing any PPT adversary's advantage is bounded by Adv_ROM + Adv_PEH + 1/|Pa|, all negligible by assumption. A full SageMath verification suite confirms |Pa| ≥ 2^128, I(b;τ) = 0, SD(D0,D1) = 1/|Pa|, and protocol completeness.
+            </p>
+        </div>
+
+        <a href="https://github.com/elregann/dqind/blob/main/Q_Problem_4.pdf" target="_blank" class="proj-link" data-en="View Paper →" data-id="Lihat Paper →">View Paper →</a>
+    </div>
+</div>
+      
     </div>
   </section>
 
@@ -1523,7 +1564,7 @@
       </span>
     </p>
     <p class="footer-r">
-        <span data-en="Last updated: April 25, 2026" data-id="Terakhir diperbarui: 25 April 2026">
+        <span data-en="Last updated: May 30, 2026" data-id="Terakhir diperbarui: 30 Mei 2026">
             Last updated: April 25, 2026
         </span>
     </p>
